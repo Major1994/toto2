@@ -1,0 +1,211 @@
+================================================================================
+MODEL DETAILS REPORT
+================================================================================
+
+BASIC INFO
+--------------------------------------------------------------------------------
+Checkpoint: /home/meijian/Time_series_big_model/toto-main/Toto-2.0-4m
+Total parameters: 4,144,448
+Patch size: 32
+Device: cuda
+
+================================================================================
+MODEL ARCHITECTURE
+================================================================================
+Toto2Model(
+  (scaler): PatchedCausalStdScaler()
+  (patch_proj): InputResidualMLP(
+    (linear1): Linear(in_features=64, out_features=1024, bias=True)
+    (linear2): Linear(in_features=1024, out_features=256, bias=True)
+    (skip_proj): Linear(in_features=64, out_features=256, bias=True)
+    (dropout): Dropout(p=0.0, inplace=False)
+  )
+  (transformer): VariateTimeTransformerDecoder(
+    (layers): DepthModuleList(
+      (0-2): 3 x SelfAttentionTransformerLayer(
+        (attn): SelfAttention(
+          (in_proj): Linear(in_features=256, out_features=768, bias=True)
+          (qk_proj): QueryKeyProjection(
+            (query_proj): ExtrapolatableRotaryProjection()
+            (key_proj): ExtrapolatableRotaryProjection()
+          )
+          (out_proj): Linear(in_features=256, out_features=256, bias=True)
+          (_pds): PerDimScale()
+        )
+        (ffn): GatedLinearUnitFeedForwardNetwork(
+          (fc1): Linear(in_features=256, out_features=1376, bias=False)
+          (fc2): Linear(in_features=688, out_features=256, bias=False)
+          (dropout1): Dropout(p=0.0, inplace=False)
+          (dropout2): Dropout(p=0.0, inplace=False)
+        )
+        (norm1): RMSNorm((256,), eps=0.0001, elementwise_affine=False)
+        (norm2): RMSNorm((256,), eps=0.0001, elementwise_affine=False)
+        (attn_resid_dropout): Dropout(p=0.0, inplace=False)
+        (mlp_resid_dropout): Dropout(p=0.0, inplace=False)
+      )
+      (3): SelfAttentionTransformerLayer(
+        (attn): SelfAttention(
+          (in_proj): Linear(in_features=256, out_features=768, bias=True)
+          (out_proj): Linear(in_features=256, out_features=256, bias=True)
+          (_pds): PerDimScale()
+        )
+        (ffn): GatedLinearUnitFeedForwardNetwork(
+          (fc1): Linear(in_features=256, out_features=1376, bias=False)
+          (fc2): Linear(in_features=688, out_features=256, bias=False)
+          (dropout1): Dropout(p=0.0, inplace=False)
+          (dropout2): Dropout(p=0.0, inplace=False)
+        )
+        (norm1): RMSNorm((256,), eps=0.0001, elementwise_affine=False)
+        (norm2): RMSNorm((256,), eps=0.0001, elementwise_affine=False)
+        (attn_resid_dropout): Dropout(p=0.0, inplace=False)
+        (mlp_resid_dropout): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (out_norm): RMSNorm((256,), eps=0.0001, elementwise_affine=False)
+  )
+  (output_head): QuantileKnotsOutputHead(
+    (param_projection): FusedPatchedParamProjection(
+      (proj): OutputResidualMLP(
+        (linear1): Linear(in_features=256, out_features=1024, bias=True)
+        (linear2): LinearReadout(in_features=1024, out_features=288, bias=True)
+        (skip_proj): LinearReadout(in_features=256, out_features=288, bias=True)
+        (dropout): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+)
+
+================================================================================
+MODEL PARAMETERS
+================================================================================
+Parameter Name                                               | Shape                |       Params
+--------------------------------------------------------------------------------
+patch_proj.linear1.weight                                    | [1024, 64]           |       65,536
+patch_proj.linear1.bias                                      | [1024]               |        1,024
+patch_proj.linear2.weight                                    | [256, 1024]          |      262,144
+patch_proj.linear2.bias                                      | [256]                |          256
+patch_proj.skip_proj.weight                                  | [256, 64]            |       16,384
+patch_proj.skip_proj.bias                                    | [256]                |          256
+transformer.layers.0.attn.in_proj.weight                     | [768, 256]           |      196,608
+transformer.layers.0.attn.in_proj.bias                       | [768]                |          768
+transformer.layers.0.attn.out_proj.weight                    | [256, 256]           |       65,536
+transformer.layers.0.attn.out_proj.bias                      | [256]                |          256
+transformer.layers.0.attn._pds.per_dim_scale                 | [64]                 |           64
+transformer.layers.0.ffn.fc1.weight                          | [1376, 256]          |      352,256
+transformer.layers.0.ffn.fc2.weight                          | [256, 688]           |      176,128
+transformer.layers.1.attn.in_proj.weight                     | [768, 256]           |      196,608
+transformer.layers.1.attn.in_proj.bias                       | [768]                |          768
+transformer.layers.1.attn.out_proj.weight                    | [256, 256]           |       65,536
+transformer.layers.1.attn.out_proj.bias                      | [256]                |          256
+transformer.layers.1.attn._pds.per_dim_scale                 | [64]                 |           64
+transformer.layers.1.ffn.fc1.weight                          | [1376, 256]          |      352,256
+transformer.layers.1.ffn.fc2.weight                          | [256, 688]           |      176,128
+transformer.layers.2.attn.in_proj.weight                     | [768, 256]           |      196,608
+transformer.layers.2.attn.in_proj.bias                       | [768]                |          768
+transformer.layers.2.attn.out_proj.weight                    | [256, 256]           |       65,536
+transformer.layers.2.attn.out_proj.bias                      | [256]                |          256
+transformer.layers.2.attn._pds.per_dim_scale                 | [64]                 |           64
+transformer.layers.2.ffn.fc1.weight                          | [1376, 256]          |      352,256
+transformer.layers.2.ffn.fc2.weight                          | [256, 688]           |      176,128
+transformer.layers.3.attn.in_proj.weight                     | [768, 256]           |      196,608
+transformer.layers.3.attn.in_proj.bias                       | [768]                |          768
+transformer.layers.3.attn.out_proj.weight                    | [256, 256]           |       65,536
+transformer.layers.3.attn.out_proj.bias                      | [256]                |          256
+transformer.layers.3.attn._pds.per_dim_scale                 | [64]                 |           64
+transformer.layers.3.ffn.fc1.weight                          | [1376, 256]          |      352,256
+transformer.layers.3.ffn.fc2.weight                          | [256, 688]           |      176,128
+output_head.param_projection.proj.linear1.weight             | [1024, 256]          |      262,144
+output_head.param_projection.proj.linear1.bias               | [1024]               |        1,024
+output_head.param_projection.proj.linear2.weight             | [288, 1024]          |      294,912
+output_head.param_projection.proj.linear2.bias               | [288]                |          288
+output_head.param_projection.proj.skip_proj.weight           | [288, 256]           |       73,728
+output_head.param_projection.proj.skip_proj.bias             | [288]                |          288
+--------------------------------------------------------------------------------
+TOTAL                                                        |                      |    4,144,448
+
+================================================================================
+MODEL LAYERS SUMMARY
+================================================================================
+Module                                                       | Type                                |       Params
+--------------------------------------------------------------------------------------------------------------
+scaler                                                       | PatchedCausalStdScaler              |            0
+patch_proj                                                   | InputResidualMLP                    |            0
+patch_proj.linear1                                           | Linear                              |       66,560
+patch_proj.linear2                                           | Linear                              |      262,400
+patch_proj.skip_proj                                         | Linear                              |       16,640
+patch_proj.dropout                                           | Dropout                             |            0
+transformer                                                  | VariateTimeTransformerDecoder       |            0
+transformer.layers                                           | DepthModuleList                     |            0
+transformer.layers.0                                         | SelfAttentionTransformerLayer       |            0
+transformer.layers.0.attn                                    | SelfAttention                       |            0
+transformer.layers.0.attn.in_proj                            | Linear                              |      197,376
+transformer.layers.0.attn.qk_proj                            | QueryKeyProjection                  |            0
+transformer.layers.0.attn.qk_proj.query_proj                 | ExtrapolatableRotaryProjection      |            0
+transformer.layers.0.attn.qk_proj.key_proj                   | ExtrapolatableRotaryProjection      |            0
+transformer.layers.0.attn.out_proj                           | Linear                              |       65,792
+transformer.layers.0.attn._pds                               | PerDimScale                         |           64
+transformer.layers.0.ffn                                     | GatedLinearUnitFeedForwardNetwork   |            0
+transformer.layers.0.ffn.fc1                                 | Linear                              |      352,256
+transformer.layers.0.ffn.fc2                                 | Linear                              |      176,128
+transformer.layers.0.ffn.dropout1                            | Dropout                             |            0
+transformer.layers.0.ffn.dropout2                            | Dropout                             |            0
+transformer.layers.0.norm1                                   | RMSNorm                             |            0
+transformer.layers.0.norm2                                   | RMSNorm                             |            0
+transformer.layers.0.attn_resid_dropout                      | Dropout                             |            0
+transformer.layers.0.mlp_resid_dropout                       | Dropout                             |            0
+transformer.layers.1                                         | SelfAttentionTransformerLayer       |            0
+transformer.layers.1.attn                                    | SelfAttention                       |            0
+transformer.layers.1.attn.in_proj                            | Linear                              |      197,376
+transformer.layers.1.attn.qk_proj                            | QueryKeyProjection                  |            0
+transformer.layers.1.attn.qk_proj.query_proj                 | ExtrapolatableRotaryProjection      |            0
+transformer.layers.1.attn.qk_proj.key_proj                   | ExtrapolatableRotaryProjection      |            0
+transformer.layers.1.attn.out_proj                           | Linear                              |       65,792
+transformer.layers.1.attn._pds                               | PerDimScale                         |           64
+transformer.layers.1.ffn                                     | GatedLinearUnitFeedForwardNetwork   |            0
+transformer.layers.1.ffn.fc1                                 | Linear                              |      352,256
+transformer.layers.1.ffn.fc2                                 | Linear                              |      176,128
+transformer.layers.1.ffn.dropout1                            | Dropout                             |            0
+transformer.layers.1.ffn.dropout2                            | Dropout                             |            0
+transformer.layers.1.norm1                                   | RMSNorm                             |            0
+transformer.layers.1.norm2                                   | RMSNorm                             |            0
+transformer.layers.1.attn_resid_dropout                      | Dropout                             |            0
+transformer.layers.1.mlp_resid_dropout                       | Dropout                             |            0
+transformer.layers.2                                         | SelfAttentionTransformerLayer       |            0
+transformer.layers.2.attn                                    | SelfAttention                       |            0
+transformer.layers.2.attn.in_proj                            | Linear                              |      197,376
+transformer.layers.2.attn.qk_proj                            | QueryKeyProjection                  |            0
+transformer.layers.2.attn.qk_proj.query_proj                 | ExtrapolatableRotaryProjection      |            0
+transformer.layers.2.attn.qk_proj.key_proj                   | ExtrapolatableRotaryProjection      |            0
+transformer.layers.2.attn.out_proj                           | Linear                              |       65,792
+transformer.layers.2.attn._pds                               | PerDimScale                         |           64
+transformer.layers.2.ffn                                     | GatedLinearUnitFeedForwardNetwork   |            0
+transformer.layers.2.ffn.fc1                                 | Linear                              |      352,256
+transformer.layers.2.ffn.fc2                                 | Linear                              |      176,128
+transformer.layers.2.ffn.dropout1                            | Dropout                             |            0
+transformer.layers.2.ffn.dropout2                            | Dropout                             |            0
+transformer.layers.2.norm1                                   | RMSNorm                             |            0
+transformer.layers.2.norm2                                   | RMSNorm                             |            0
+transformer.layers.2.attn_resid_dropout                      | Dropout                             |            0
+transformer.layers.2.mlp_resid_dropout                       | Dropout                             |            0
+transformer.layers.3                                         | SelfAttentionTransformerLayer       |            0
+transformer.layers.3.attn                                    | SelfAttention                       |            0
+transformer.layers.3.attn.in_proj                            | Linear                              |      197,376
+transformer.layers.3.attn.out_proj                           | Linear                              |       65,792
+transformer.layers.3.attn._pds                               | PerDimScale                         |           64
+transformer.layers.3.ffn                                     | GatedLinearUnitFeedForwardNetwork   |            0
+transformer.layers.3.ffn.fc1                                 | Linear                              |      352,256
+transformer.layers.3.ffn.fc2                                 | Linear                              |      176,128
+transformer.layers.3.ffn.dropout1                            | Dropout                             |            0
+transformer.layers.3.ffn.dropout2                            | Dropout                             |            0
+transformer.layers.3.norm1                                   | RMSNorm                             |            0
+transformer.layers.3.norm2                                   | RMSNorm                             |            0
+transformer.layers.3.attn_resid_dropout                      | Dropout                             |            0
+transformer.layers.3.mlp_resid_dropout                       | Dropout                             |            0
+transformer.out_norm                                         | RMSNorm                             |            0
+output_head                                                  | QuantileKnotsOutputHead             |            0
+output_head.param_projection                                 | FusedPatchedParamProjection         |            0
+output_head.param_projection.proj                            | OutputResidualMLP                   |            0
+output_head.param_projection.proj.linear1                    | Linear                              |      263,168
+output_head.param_projection.proj.linear2                    | LinearReadout                       |      295,200
+output_head.param_projection.proj.skip_proj                  | LinearReadout                       |       74,016
+output_head.param_projection.proj.dropout                    | Dropout                             |            0
